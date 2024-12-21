@@ -77,6 +77,20 @@ export const Archive: Block = {
       label: 'Limit',
     },
     {
+      name: 'postSize',
+      type: 'select',
+      options: [
+        {
+          label: 'medium',
+          value: 'M',
+        },
+        {
+          label: 'large',
+          value: 'L',
+        },
+      ],
+    },
+    {
       name: 'selectedDocs',
       type: 'relationship',
       admin: {

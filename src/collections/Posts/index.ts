@@ -27,6 +27,27 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
 import { getServerSideURL } from '@/utilities/getURL'
+import { FieldHook, ValidationError } from 'payload';
+
+// Hook to ensure only one featured post
+const restrictSingleFeaturedPost: FieldHook = async ({ value, originalDoc, req }) => {
+  if (value === true) { // Check if the current post is being marked as featured
+    const { payload } = req;
+    const existingFeaturedPost = await payload.find({
+      collection: 'posts',
+      where: {
+        featured: {
+          equals: true,
+        },
+      },
+    });
+
+    if (existingFeaturedPost.docs.length > 0 && existingFeaturedPost.docs[0].id !== originalDoc.id) {
+      throw new ValidationError({errors: [{message: 'There is already a featured post. Please unmark the existing post before marking this one as featured.', path:"featured"}]});
+    }
+  }
+  return value;
+};
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -36,9 +57,6 @@ export const Posts: CollectionConfig<'posts'> = {
     read: authenticatedOrPublished,
     update: authenticated,
   },
-  // This config controls what's populated by default when a post is referenced
-  // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
-  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'posts'>
   defaultPopulate: {
     title: true,
     slug: true,
@@ -49,24 +67,24 @@ export const Posts: CollectionConfig<'posts'> = {
     },
   },
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'featured', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
           collection: 'posts',
-        })
+        });
 
-        return `${getServerSideURL()}${path}`
+        return `${getServerSideURL()}${path}`;
       },
     },
     preview: (data) => {
       const path = generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
         collection: 'posts',
-      })
+      });
 
-      return `${getServerSideURL()}${path}`
+      return `${getServerSideURL()}${path}`;
     },
     useAsTitle: 'title',
   },
@@ -75,6 +93,18 @@ export const Posts: CollectionConfig<'posts'> = {
       name: 'title',
       type: 'text',
       required: true,
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      admin: {
+        description: 'Mark this post as featured.',
+        position: 'sidebar',
+      },
+      label: 'Featured',
+      hooks: {
+        beforeChange: [restrictSingleFeaturedPost],
+      },
     },
     {
       type: 'tabs',
@@ -93,7 +123,7 @@ export const Posts: CollectionConfig<'posts'> = {
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
-                  ]
+                  ];
                 },
               }),
               label: false,
@@ -115,7 +145,7 @@ export const Posts: CollectionConfig<'posts'> = {
                   id: {
                     not_in: [id],
                   },
-                }
+                };
               },
               hasMany: true,
               relationTo: 'posts',
@@ -147,13 +177,9 @@ export const Posts: CollectionConfig<'posts'> = {
             MetaImageField({
               relationTo: 'media',
             }),
-
             MetaDescriptionField({}),
             PreviewField({
-              // if the `generateUrl` function is configured
               hasGenerateFn: true,
-
-              // field paths to match the target field for data
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
@@ -174,9 +200,9 @@ export const Posts: CollectionConfig<'posts'> = {
         beforeChange: [
           ({ siblingData, value }) => {
             if (siblingData._status === 'published' && !value) {
-              return new Date()
+              return new Date();
             }
-            return value
+            return value;
           },
         ],
       },
@@ -190,9 +216,6 @@ export const Posts: CollectionConfig<'posts'> = {
       hasMany: true,
       relationTo: 'users',
     },
-    // This field is only used to populate the user data via the `populateAuthors` hook
-    // This is because the `user` collection has access control locked to protect user privacy
-    // GraphQL will also not return mutated user data that differs from the underlying schema
     {
       name: 'populatedAuthors',
       type: 'array',
@@ -223,9 +246,9 @@ export const Posts: CollectionConfig<'posts'> = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
+        interval: 100,
       },
     },
     maxPerDoc: 50,
   },
-}
+};

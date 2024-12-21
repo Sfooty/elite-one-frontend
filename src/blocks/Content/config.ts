@@ -8,6 +8,11 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
+import {Standings} from "@/blocks/Standings/config";
+import {FeaturedPostBlock} from "@/blocks/FeaturedPostBlock/config";
+import {MediaBlock} from "@/blocks/MediaBlock/config";
+import {Archive} from "@/blocks/ArchiveBlock/config";
+import {CallToAction} from "@/blocks/CallToAction/config";
 
 const columnFields: Field[] = [
   {
@@ -49,6 +54,11 @@ const columnFields: Field[] = [
     label: false,
   },
   {
+    name: 'block',
+    type: 'blocks',
+    blocks: [Standings, FeaturedPostBlock, MediaBlock, Archive, CallToAction],
+  },
+  {
     name: 'enableLink',
     type: 'checkbox',
   },
@@ -65,6 +75,11 @@ export const Content: Block = {
   slug: 'content',
   interfaceName: 'ContentBlock',
   fields: [
+    {
+      name:'paddingTop',
+      type: 'checkbox',
+      defaultValue: true,
+    },
     {
       name: 'columns',
       type: 'array',
