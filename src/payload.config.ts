@@ -6,6 +6,8 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import { fr } from '@payloadcms/translations/languages/fr'
+import {en} from "@payloadcms/translations/languages/en";
+import {es} from "@payloadcms/translations/languages/es";
 
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
@@ -18,7 +20,6 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import {Teams} from "@/collections/Teams";
-import {en} from "@payloadcms/translations/languages/en";
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -26,7 +27,36 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   i18n: {
-    supportedLanguages: {en, fr}
+    supportedLanguages: {en, fr, es},
+  },
+  localization: {
+    locales: [
+      {
+        label: {
+          en: 'English',
+          fr: 'Anglais',
+          es: 'Inglés',
+        },
+        code: 'en'
+      },
+      {
+        label: {
+          en: 'French',
+          fr: 'Français',
+          es: 'Francés',
+        },
+        code: 'fr'
+      },
+      {
+        label: {
+          en: 'Spanish',
+          fr: 'Espagnol',
+          es: 'Español',
+        },
+        code: 'es'
+      }
+    ], // required
+    defaultLocale: 'fr', // required
   },
   admin: {
     components: {

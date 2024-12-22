@@ -52,7 +52,7 @@ export interface Config {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'fr' | 'es';
   user: User & {
     collection: 'users';
   };
@@ -274,7 +274,7 @@ export interface ContentBlock {
   paddingTop?: boolean | null;
   columns?:
     | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        size?: ('oneThird' | 'oneQuarter' | 'threeQuarters' | 'half' | 'twoThirds' | 'full') | null;
         richText?: {
           root: {
             type: string;
@@ -850,154 +850,13 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        cta?:
-          | T
-          | {
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        content?:
-          | T
-          | {
-              paddingTop?: T;
-              columns?:
-                | T
-                | {
-                    size?: T;
-                    richText?: T;
-                    block?:
-                      | T
-                      | {
-                          standingsBlock?:
-                            | T
-                            | {
-                                size?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          featuredPostBlock?:
-                            | T
-                            | {
-                                id?: T;
-                                blockName?: T;
-                              };
-                          mediaBlock?:
-                            | T
-                            | {
-                                media?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          archive?:
-                            | T
-                            | {
-                                introContent?: T;
-                                populateBy?: T;
-                                relationTo?: T;
-                                categories?: T;
-                                limit?: T;
-                                postSize?: T;
-                                selectedDocs?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          cta?:
-                            | T
-                            | {
-                                richText?: T;
-                                links?:
-                                  | T
-                                  | {
-                                      link?:
-                                        | T
-                                        | {
-                                            type?: T;
-                                            newTab?: T;
-                                            reference?: T;
-                                            url?: T;
-                                            label?: T;
-                                            appearance?: T;
-                                          };
-                                      id?: T;
-                                    };
-                                id?: T;
-                                blockName?: T;
-                              };
-                        };
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        mediaBlock?:
-          | T
-          | {
-              media?: T;
-              id?: T;
-              blockName?: T;
-            };
-        archive?:
-          | T
-          | {
-              introContent?: T;
-              populateBy?: T;
-              relationTo?: T;
-              categories?: T;
-              limit?: T;
-              postSize?: T;
-              selectedDocs?: T;
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              enableIntro?: T;
-              introContent?: T;
-              id?: T;
-              blockName?: T;
-            };
-        standingsBlock?:
-          | T
-          | {
-              size?: T;
-              id?: T;
-              blockName?: T;
-            };
-        featuredPostBlock?:
-          | T
-          | {
-              id?: T;
-              blockName?: T;
-            };
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        standingsBlock?: T | StandingsBlockSelect<T>;
+        featuredPostBlock?: T | FeaturedPostBlockSelect<T>;
       };
   meta?:
     | T
@@ -1012,6 +871,118 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock_select".
+ */
+export interface CallToActionBlockSelect<T extends boolean = true> {
+  richText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlock_select".
+ */
+export interface ContentBlockSelect<T extends boolean = true> {
+  paddingTop?: T;
+  columns?:
+    | T
+    | {
+        size?: T;
+        richText?: T;
+        block?:
+          | T
+          | {
+              standingsBlock?: T | StandingsBlockSelect<T>;
+              featuredPostBlock?: T | FeaturedPostBlockSelect<T>;
+              mediaBlock?: T | MediaBlockSelect<T>;
+              archive?: T | ArchiveBlockSelect<T>;
+              cta?: T | CallToActionBlockSelect<T>;
+            };
+        enableLink?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StandingsBlock_select".
+ */
+export interface StandingsBlockSelect<T extends boolean = true> {
+  size?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPostBlock_select".
+ */
+export interface FeaturedPostBlockSelect<T extends boolean = true> {
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock_select".
+ */
+export interface MediaBlockSelect<T extends boolean = true> {
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock_select".
+ */
+export interface ArchiveBlockSelect<T extends boolean = true> {
+  introContent?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  postSize?: T;
+  selectedDocs?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock_select".
+ */
+export interface FormBlockSelect<T extends boolean = true> {
+  form?: T;
+  enableIntro?: T;
+  introContent?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

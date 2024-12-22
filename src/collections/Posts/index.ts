@@ -105,6 +105,7 @@ export const Posts: CollectionConfig<'posts'> = {
       hooks: {
         beforeChange: [restrictSingleFeaturedPost],
       },
+      defaultValue: false,
     },
     {
       type: 'tabs',

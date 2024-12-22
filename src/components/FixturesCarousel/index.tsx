@@ -7,21 +7,6 @@ import {PrevArrow} from "@/components/FixturesCarousel/Components/PrevArrow";
 import {NextArrow} from "@/components/FixturesCarousel/Components/NextArrow";
 
 
-interface GameWeek {
-  id: number;
-  league_id: number;
-  week_number: number;
-  season_id: number;
-  season: number;
-  start_date: string;
-  end_date: string;
-  user_id: number;
-  description: string;
-  completed: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
 const FixturesCarousel: React.FC = () => {
   const currentWeekNumber = 1; // Your logic to determine the current week
   const currentWeekFixtures = fixtures.filter(

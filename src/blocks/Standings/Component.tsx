@@ -34,7 +34,7 @@ export const StandingsBlock: React.FC<Props> = ({ size= "small", className }) =>
   });
 
   return (
-    <div className={`standings-table container mx-auto ${className}`}>
+    <div className={`standings-table container md:px-0 mx-auto ${className? className : ""}`}>
       <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gray-200">
         <tr>

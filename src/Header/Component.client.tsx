@@ -34,27 +34,29 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({header}) => {
 
   return (
     <div className="bg-secondary-foreground" {...(theme ? {'data-theme': theme} : {})}>
-      <div className="container flex justify-center relative z-20 py-5">
-        <div className="flex space-x-4 ">
-          {teamsData.map((team, index) => (
-            <a
-              key={index}
-              href={team.url ? team.url : undefined}
-              target={team.url ? "_blank" : undefined}
-              rel={team.url ? "noopener noreferrer" : undefined}
-              style={{display: 'inline-block'}}
-              className="cursor-pointer"
-            >
-              <img
-                src={team.logo}
-                alt={team.name}
-                className="transition-transform transform hover:scale-110"
-                style={{width: '50px', height: '50px', borderRadius: '50%'}}
-              />
-            </a>
-          ))}
+      {pathname === '/' &&
+        <div className="container flex justify-center relative z-20 py-5">
+          <div className="flex space-x-4 overflow-x-scroll p-2">
+            {teamsData.map((team, index) => (
+              <a
+                key={index}
+                href={team.url ? team.url : undefined}
+                target={team.url ? "_blank" : undefined}
+                rel={team.url ? "noopener noreferrer" : undefined}
+                style={{display: 'inline-block'}}
+                className="cursor-pointer"
+              >
+                <img
+                  src={team.logo}
+                  alt={team.name}
+                  className="transition-transform transform hover:scale-110"
+                  style={{width: '50px', height: '50px', borderRadius: '50%'}}
+                />
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
+      }
       <div className="bg-primary-foreground">
         <header className="container sticky top-0 z-20" {...(theme ? {'data-theme': theme} : {})}>
           <div className="py-8 border-b border-border flex start gap-24 ">
@@ -65,7 +67,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({header}) => {
           </div>
         </header>
       </div>
-      <FixturesCarousel/>
+
+      {pathname === '/' &&
+        <FixturesCarousel/>
+      }
     </div>
   )
 }

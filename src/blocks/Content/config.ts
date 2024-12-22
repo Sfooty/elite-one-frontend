@@ -25,6 +25,14 @@ const columnFields: Field[] = [
         value: 'oneThird',
       },
       {
+        label: 'One Quarter',
+        value: 'oneQuarter',
+      },
+      {
+        label: 'Three Quarters',
+        value: 'threeQuarters',
+      },
+      {
         label: 'Half',
         value: 'half',
       },

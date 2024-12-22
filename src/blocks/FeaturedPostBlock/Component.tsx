@@ -1,6 +1,6 @@
 import {getPayload} from "payload";
 import configPromise from "@payload-config";
-import {FeaturedPostCard} from "@/components/FeaturedPost";
+import {FeaturedPostCard} from "src/components/FeaturedPostCard";
 
 
 export const FeaturedPostBlock: React.FC = async ({}) => {
