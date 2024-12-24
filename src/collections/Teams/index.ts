@@ -7,8 +7,16 @@ const isClubAdminOrAdmin = (user) => {
 export const Teams: CollectionConfig = {
   slug: 'teams',
   labels: {
-    singular: 'Team',
-    plural: 'Teams',
+    singular: {
+      en: 'Team',
+      es: 'Equipo',
+      fr: 'Équipe',
+    },
+    plural: {
+      en: 'Teams',
+      es: 'Equipos',
+      fr: 'Équipes',
+    },
   },
   admin: {
     useAsTitle: 'team_name',
@@ -31,6 +39,7 @@ export const Teams: CollectionConfig = {
       name: 'country',
       type: 'text',
       required: true,
+      localized: true,
       label: 'Country',
     },
     {
@@ -43,6 +52,7 @@ export const Teams: CollectionConfig = {
       name: 'description',
       type: 'textarea',
       label: 'Description',
+      localized: true,
     },
     {
       name: 'coach_name',

@@ -1,8 +1,8 @@
 'use client'
 import {useHeaderTheme} from '@/providers/HeaderTheme'
 import Link from 'next/link'
-import {usePathname} from 'next/navigation'
-import React, {useEffect, useState} from 'react'
+import {usePathname, useParams} from 'next/navigation'
+import React, { useEffect, useState, useTransition } from 'react'
 
 import type {Header} from '@/payload-types'
 
@@ -11,6 +11,7 @@ import {HeaderNav} from './Nav'
 
 import teamsData from "@/data/team-data";
 import FixturesCarousel from "@/components/FixturesCarousel";
+
 
 interface HeaderClientProps {
   header: Header
@@ -21,6 +22,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({header}) => {
   const [theme, setTheme] = useState<string | null>(null)
   const {headerTheme, setHeaderTheme} = useHeaderTheme()
   const pathname = usePathname()
+  const locale = useParams().locale;
 
   useEffect(() => {
     setHeaderTheme(null)
@@ -34,7 +36,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({header}) => {
 
   return (
     <div className="bg-secondary-foreground" {...(theme ? {'data-theme': theme} : {})}>
-      {pathname === '/' &&
+      {pathname === `/${locale}` &&
         <div className="container flex justify-center relative z-20 py-5">
           <div className="flex space-x-4 overflow-x-scroll p-2">
             {teamsData.map((team, index) => (
@@ -68,7 +70,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({header}) => {
         </header>
       </div>
 
-      {pathname === '/' &&
+      {pathname === `/${locale}` &&
         <FixturesCarousel/>
       }
     </div>

@@ -4,8 +4,16 @@ export const FeaturedPostBlock: Block = {
   slug: 'featuredPostBlock',
   interfaceName: 'FeaturedPostBlock',
   labels: {
-    singular: 'Featured Post',
-    plural: 'Featured Posts',
+    singular:{
+      en: 'Featured Post',
+      es: 'Publicación destacada',
+      fr: 'Article en vedette',
+    },
+    plural:{
+      en: 'Featured Posts',
+      es: 'Publicaciones destacadas',
+      fr: 'Articles en vedette',
+    },
   },
   fields: [],
 }

@@ -274,7 +274,7 @@ export interface ContentBlock {
   paddingTop?: boolean | null;
   columns?:
     | {
-        size?: ('oneThird' | 'oneQuarter' | 'threeQuarters' | 'half' | 'twoThirds' | 'full') | null;
+        size?: ('oneThird' | 'twoThirds' | 'oneQuarter' | 'threeQuarters' | 'half' | 'full') | null;
         richText?: {
           root: {
             type: string;

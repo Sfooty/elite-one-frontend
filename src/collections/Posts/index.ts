@@ -29,6 +29,7 @@ import { slugField } from '@/fields/slug'
 import { getServerSideURL } from '@/utilities/getURL'
 import { FieldHook, ValidationError } from 'payload';
 
+
 // Hook to ensure only one featured post
 const restrictSingleFeaturedPost: FieldHook = async ({ value, originalDoc, req }) => {
   if (value === true) { // Check if the current post is being marked as featured
@@ -40,10 +41,22 @@ const restrictSingleFeaturedPost: FieldHook = async ({ value, originalDoc, req }
           equals: true,
         },
       },
+      limit: 1,
     });
 
-    if (existingFeaturedPost.docs.length > 0 && existingFeaturedPost.docs[0].id !== originalDoc.id) {
-      throw new ValidationError({errors: [{message: 'There is already a featured post. Please unmark the existing post before marking this one as featured.', path:"featured"}]});
+    const currentPostId = originalDoc?.id;
+
+    if (
+      existingFeaturedPost.docs.length > 0 &&
+      existingFeaturedPost.docs[0].id !== currentPostId
+    ) {
+      await payload.update({
+        collection: 'posts',
+        id: existingFeaturedPost.docs[0].id,
+        data: {
+          featured: false,
+        },
+      });
     }
   }
   return value;
@@ -51,6 +64,18 @@ const restrictSingleFeaturedPost: FieldHook = async ({ value, originalDoc, req }
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
+  labels: {
+    singular: {
+      en: 'Post',
+      fr: 'Article',
+      es: 'Artículo',
+    },
+    plural: {
+      en: 'Posts',
+      fr: 'Articles',
+      es: 'Artículos',
+    },
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -69,19 +94,21 @@ export const Posts: CollectionConfig<'posts'> = {
   admin: {
     defaultColumns: ['title', 'slug', 'featured', 'updatedAt'],
     livePreview: {
-      url: ({ data }) => {
+      url: ({ data, locale }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
           collection: 'posts',
+          locale: locale.code,
         });
 
         return `${getServerSideURL()}${path}`;
       },
     },
-    preview: (data) => {
+    preview: (data, {locale}) => {
       const path = generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
         collection: 'posts',
+        locale,
       });
 
       return `${getServerSideURL()}${path}`;
@@ -93,15 +120,29 @@ export const Posts: CollectionConfig<'posts'> = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
+      label : {
+          en: 'Title',
+          fr: 'Titre',
+          es: 'Título',
+      }
     },
     {
       name: 'featured',
       type: 'checkbox',
       admin: {
-        description: 'Mark this post as featured.',
+        description: {
+          en: 'Mark this post as featured.',
+          fr: 'Marquez cet article comme en vedette.',
+          es: 'Marcar este artículo como destacado.',
+        },
         position: 'sidebar',
       },
-      label: 'Featured',
+      label: {
+        en: 'Featured',
+        fr: 'En vedette',
+        es: 'Destacado',
+      },
       hooks: {
         beforeChange: [restrictSingleFeaturedPost],
       },
@@ -131,7 +172,11 @@ export const Posts: CollectionConfig<'posts'> = {
               required: true,
             },
           ],
-          label: 'Content',
+          label: {
+            en: 'Content',
+            fr: 'Contenu',
+            es: 'Contenido',
+          },
         },
         {
           fields: [
@@ -153,6 +198,11 @@ export const Posts: CollectionConfig<'posts'> = {
             },
             {
               name: 'categories',
+              label:{
+                en: 'Categories',
+                fr: 'Catégories',
+                es: 'Categorías',
+              },
               type: 'relationship',
               admin: {
                 position: 'sidebar',
@@ -161,11 +211,19 @@ export const Posts: CollectionConfig<'posts'> = {
               relationTo: 'categories',
             },
           ],
-          label: 'Meta',
+          label: {
+            en: 'Meta',
+            fr: 'Méta',
+            es: 'Meta',
+          },
         },
         {
           name: 'meta',
-          label: 'SEO',
+          label: {
+            en: 'SEO',
+            fr: 'SEO',
+            es: 'SEO',
+          },
           fields: [
             OverviewField({
               titlePath: 'meta.title',
@@ -191,6 +249,11 @@ export const Posts: CollectionConfig<'posts'> = {
     {
       name: 'publishedAt',
       type: 'date',
+      label: {
+        en: 'Publish Date',
+        fr: 'Date de Publication',
+        es: 'Fecha de Publicación',
+      },
       admin: {
         date: {
           pickerAppearance: 'dayAndTime',
@@ -210,6 +273,11 @@ export const Posts: CollectionConfig<'posts'> = {
     },
     {
       name: 'authors',
+      label: {
+        en: 'Authors',
+        fr: 'Auteurs',
+        es: 'Autores',
+      },
       type: 'relationship',
       admin: {
         position: 'sidebar',

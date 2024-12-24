@@ -33,7 +33,15 @@ export const Standings: Block = {
     }
   ],
   labels: {
-    plural: 'Standings',
-    singular: 'Standing',
+    plural:{
+      en: 'Standings',
+      es: 'Clasificación',
+      fr: 'Classements',
+    },
+    singular:{
+      en: 'Standing',
+      es: 'Clasificación',
+      fr: 'Classement',
+    },
   },
 }

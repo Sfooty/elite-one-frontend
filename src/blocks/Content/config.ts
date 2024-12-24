@@ -17,31 +17,59 @@ import {CallToAction} from "@/blocks/CallToAction/config";
 const columnFields: Field[] = [
   {
     name: 'size',
+    label: {
+        en: 'Size',
+        es: 'Tamaño',
+        fr: 'Taille',
+    },
     type: 'select',
-    defaultValue: 'oneThird',
     options: [
       {
-        label: 'One Third',
+        label: {
+          en: 'One Third',
+          fr: 'Un tiers',
+          es: 'Un tercio',
+        },
         value: 'oneThird',
       },
       {
-        label: 'One Quarter',
-        value: 'oneQuarter',
-      },
-      {
-        label: 'Three Quarters',
-        value: 'threeQuarters',
-      },
-      {
-        label: 'Half',
-        value: 'half',
-      },
-      {
-        label: 'Two Thirds',
+        label:{
+          en: 'Two Thirds',
+          fr: 'Deux tiers',
+          es: 'Dos tercios',
+        },
         value: 'twoThirds',
       },
       {
-        label: 'Full',
+        label: {
+          en: 'One Quarter',
+          fr: 'Un quart',
+          es: 'Un cuarto',
+        },
+        value: 'oneQuarter',
+      },
+      {
+        label: {
+          en: 'Three Quarters',
+          fr: 'Trois quarts',
+          es: 'Tres cuartos',
+        },
+        value: 'threeQuarters',
+      },
+      {
+        label:{
+          en: 'Half',
+          fr: 'Moitié',
+          es: 'Mitad',
+        },
+        value: 'half',
+      },
+      {
+        label: {
+          en: 'Full',
+          fr: 'Plein',
+          es: 'Completo',
+        },
         value: 'full',
       },
     ],
@@ -49,6 +77,7 @@ const columnFields: Field[] = [
   {
     name: 'richText',
     type: 'richText',
+    localized: true,
     editor: lexicalEditor({
       features: ({ rootFeatures }) => {
         return [
@@ -63,11 +92,21 @@ const columnFields: Field[] = [
   },
   {
     name: 'block',
+    label: {
+      en: 'Block',
+      es: 'Bloque',
+      fr: 'Bloc',
+    },
     type: 'blocks',
     blocks: [Standings, FeaturedPostBlock, MediaBlock, Archive, CallToAction],
   },
   {
     name: 'enableLink',
+    label: {
+      en: 'Enable Link',
+      es: 'Habilitar enlace',
+      fr: 'Activer le lien',
+    },
     type: 'checkbox',
   },
   link({
@@ -81,15 +120,37 @@ const columnFields: Field[] = [
 
 export const Content: Block = {
   slug: 'content',
+  labels: {
+    singular: {
+      en: 'Content',
+      es: 'Contenido',
+      fr: 'Contenu',
+    },
+    plural: {
+      en: 'Content',
+      es: 'Contenido',
+      fr: 'Contenu',
+    },
+  },
   interfaceName: 'ContentBlock',
   fields: [
     {
       name:'paddingTop',
+      label: {
+        en: 'Padding Top',
+        es: 'Relleno superior',
+        fr: 'Rembourrage supérieur',
+      },
       type: 'checkbox',
       defaultValue: true,
     },
     {
       name: 'columns',
+      label: {
+        en: 'Columns',
+        es: 'Columnas',
+        fr: 'Colonnes',
+      },
       type: 'array',
       fields: columnFields,
     },

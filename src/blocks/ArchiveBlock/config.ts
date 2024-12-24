@@ -10,10 +10,23 @@ import {
 export const Archive: Block = {
   slug: 'archive',
   interfaceName: 'ArchiveBlock',
+  labels: {
+    singular: {
+      en: 'Archive',
+      es: 'Archivo',
+      fr: 'Archive',
+    },
+    plural: {
+      en: 'Archives',
+      es: 'Archivos',
+      fr: 'Archives',
+    },
+  },
   fields: [
     {
       name: 'introContent',
       type: 'richText',
+      localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -48,10 +61,18 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
       },
       defaultValue: 'posts',
-      label: 'Collections To Show',
+      label: {
+        en: 'Collections To Show',
+        es: 'Colecciones a mostrar',
+        fr: 'Collections à afficher',
+      },
       options: [
         {
-          label: 'Posts',
+          label: {
+            en: 'Posts',
+            es: 'Publicaciones',
+            fr: 'Articles',
+          },
           value: 'posts',
         },
       ],
@@ -100,9 +121,5 @@ export const Archive: Block = {
       label: 'Selection',
       relationTo: ['posts'],
     },
-  ],
-  labels: {
-    plural: 'Archives',
-    singular: 'Archive',
-  },
+  ]
 }

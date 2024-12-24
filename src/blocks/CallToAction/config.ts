@@ -11,11 +11,16 @@ import { linkGroup } from '../../fields/linkGroup'
 
 export const CallToAction: Block = {
   slug: 'cta',
+  labels: {
+    singular: { en: 'Call to Action', es: 'Llamada a la acción', fr: 'Appel à l\'action' },
+    plural: { en: 'Calls to Action', es: 'Llamadas a la acción', fr: 'Appels à l\'action' },
+  },
   interfaceName: 'CallToActionBlock',
   fields: [
     {
       name: 'richText',
       type: 'richText',
+      localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -35,8 +40,4 @@ export const CallToAction: Block = {
       },
     }),
   ],
-  labels: {
-    plural: 'Calls to Action',
-    singular: 'Call to Action',
-  },
 }

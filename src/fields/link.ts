@@ -25,6 +25,11 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
   const linkResult: Field = {
     name: 'link',
     type: 'group',
+    label:{
+      en: 'Link',
+      es: 'Enlace',
+      fr: 'Lien',
+    },
     admin: {
       hideGutter: true,
     },

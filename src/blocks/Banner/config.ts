@@ -8,6 +8,10 @@ import {
 
 export const Banner: Block = {
   slug: 'banner',
+  labels: {
+    singular: { en: 'Banner', es: 'Banner', fr: 'Bannière' },
+    plural: { en: 'Banners', es: 'Banners', fr: 'Bannières' },
+  },
   fields: [
     {
       name: 'style',
@@ -24,6 +28,7 @@ export const Banner: Block = {
     {
       name: 'content',
       type: 'richText',
+      localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]

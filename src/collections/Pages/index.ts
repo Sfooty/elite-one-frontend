@@ -26,6 +26,18 @@ import {FeaturedPostBlock} from "@/blocks/FeaturedPostBlock/config";
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
+  labels: {
+    singular: {
+      en: 'Page',
+      es: 'Página',
+      fr: 'Page',
+    },
+    plural: {
+      en: 'Pages',
+      es: 'Páginas',
+      fr: 'Pages',
+    },
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -42,19 +54,21 @@ export const Pages: CollectionConfig<'pages'> = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data }) => {
+      url: ({ data, locale }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
           collection: 'pages',
+          locale: locale.code,
         })
 
         return `${getServerSideURL()}${path}`
       },
     },
-    preview: (data) => {
+    preview: (data,{locale}) => {
       const path = generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
         collection: 'pages',
+        locale,
       })
 
       return `${getServerSideURL()}${path}`
@@ -64,7 +78,13 @@ export const Pages: CollectionConfig<'pages'> = {
   fields: [
     {
       name: 'title',
+      label: {
+        en: 'Title',
+        es: 'Título',
+        fr: 'Titre',
+      },
       type: 'text',
+      localized: true,
       required: true,
     },
     {
@@ -72,18 +92,31 @@ export const Pages: CollectionConfig<'pages'> = {
       tabs: [
         {
           fields: [hero],
-          label: 'Hero',
+          label: {
+            en: 'Hero',
+            es: 'Hero',
+            fr: 'Hero',
+          },
         },
         {
           fields: [
             {
               name: 'layout',
+              label: {
+                en: 'Layout',
+                es: 'Diseño',
+                fr: 'Disposition',
+              },
               type: 'blocks',
               blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Standings, FeaturedPostBlock],
               required: true,
             },
           ],
-          label: 'Content',
+          label: {
+            en: 'Content',
+            es: 'Contenido',
+            fr: 'Contenu',
+          },
         },
         {
           name: 'meta',
@@ -116,6 +149,11 @@ export const Pages: CollectionConfig<'pages'> = {
     },
     {
       name: 'publishedAt',
+      label:{
+        en: 'Published At',
+        es: 'Publicado en',
+        fr: 'Publié à',
+      },
       type: 'date',
       admin: {
         position: 'sidebar',

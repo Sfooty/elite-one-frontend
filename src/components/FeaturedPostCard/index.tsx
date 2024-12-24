@@ -54,8 +54,8 @@ export const FeaturedPostCard: React.FC<Props> = ({post}) => {
           {!metaImage && <div className="">No image</div>}
           {metaImage && typeof metaImage !== 'string' &&
               <Media
-                className={"h-full duration-[2000ms]"}
-                imgClassName={"w-full h-full transform transition-transform duration-[2000ms] group-hover:scale-110"}
+                className={"h-full duration-1000"}
+                imgClassName={"w-full h-full transform transition-transform duration-1000 group-hover:scale-110"}
                 resource={metaImage} alt={fetchedPost?.meta?.description || "Featured post image"} />
           }
           <div className="absolute bottom-5 left-0 right-0 p-4 flex flex-col gap-4 z-20">

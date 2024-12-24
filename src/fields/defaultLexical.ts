@@ -33,6 +33,7 @@ export const defaultLexical: Config['editor'] = lexicalEditor({
               },
               label: ({ t }) => t('fields:enterURL'),
               required: true,
+              localized: true,
             },
           ]
         },
