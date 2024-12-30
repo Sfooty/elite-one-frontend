@@ -14,6 +14,7 @@ import { TypedLocale } from 'payload'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import localization from '@/i18n/localization'
 
+
 export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const navItems = header?.navItems || []
 

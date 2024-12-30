@@ -12,6 +12,19 @@ export const Footer: GlobalConfig = {
     {
       name: 'navItems',
       type: 'array',
+      labels: {
+        singular:{
+          en: 'Nav Item',
+          fr: 'Élément de navigation',
+          es: 'Elemento de navegación',
+        },
+        plural: {
+          en: 'Nav Items',
+          fr: 'Éléments de navigation',
+          es: 'Elementos de navegación',
+        },
+      },
+      localized: true,
       fields: [
         link({
           appearances: false,

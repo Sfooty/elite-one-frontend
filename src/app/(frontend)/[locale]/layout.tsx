@@ -16,29 +16,36 @@ import { draftMode } from 'next/headers'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+import { TypedLocale } from 'payload'
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+type Args = {
+  children: React.ReactNode
+  params: Promise<{
+    locale: TypedLocale
+  }>
+}
+
+export default async function RootLayout({ children,params }: Args) {
   const { isEnabled } = await draftMode()
-
+  const { locale } = await params
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html className={cn(GeistSans.variable, GeistMono.variable)} lang={locale} suppressHydrationWarning>
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
-        <Providers>
+        <Providers params={params}>
           <AdminBar
             adminBarProps={{
               preview: isEnabled,
             }}
           />
           <LivePreviewListener />
-
-          <Header />
+          <Header locale={locale}/>
           {children}
-          <Footer />
+          <Footer locale={locale} />
         </Providers>
       </body>
     </html>

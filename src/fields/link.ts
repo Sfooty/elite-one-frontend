@@ -47,11 +47,19 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
             defaultValue: 'reference',
             options: [
               {
-                label: 'Internal link',
+                label:{
+                  en: 'Internal link',
+                  es: 'Enlace interno',
+                  fr: 'Lien interne',
+                },
                 value: 'reference',
               },
               {
-                label: 'Custom URL',
+                label:{
+                  en: 'Custom URL',
+                  es: 'URL personalizada',
+                  fr: 'URL personnalisée',
+                },
                 value: 'custom',
               },
             ],
@@ -65,7 +73,11 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
               },
               width: '50%',
             },
-            label: 'Open in new tab',
+            label:{
+              en: 'Open in new tab',
+              es: 'Abrir en una nueva pestaña',
+              fr: 'Ouvrir dans un nouvel onglet',
+            },
           },
         ],
       },
@@ -79,7 +91,11 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'reference',
       },
-      label: 'Document to link to',
+      label:{
+        en: 'Document to link to',
+        es: 'Documento al que enlazar',
+        fr: 'Document à lier',
+      },
       maxDepth: 1,
       relationTo: ['pages'],
       required: true,
@@ -90,7 +106,11 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'custom',
       },
-      label: 'Custom URL',
+      label:{
+        en: 'Custom URL',
+        es: 'URL personalizada',
+        fr: 'URL personnalisée',
+      },
       required: true,
     },
   ]
@@ -114,7 +134,11 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
           admin: {
             width: '50%',
           },
-          label: 'Label',
+          label:{
+            en: 'Label',
+            es: 'Etiqueta',
+            fr: 'Étiquette',
+          },
           required: true,
         },
       ],

@@ -1,4 +1,7 @@
+"use client";
+
 import React from 'react'
+import { useTranslations } from 'use-intl'
 
 const defaultLabels = {
   plural: 'Docs',
@@ -32,6 +35,8 @@ export const PageRange: React.FC<{
     totalDocs,
   } = props
 
+  const t = useTranslations()
+
   let indexStart = (currentPage ? currentPage - 1 : 1) * (limit || 1) + 1
   if (totalDocs && indexStart > totalDocs) indexStart = 0
 
@@ -46,8 +51,8 @@ export const PageRange: React.FC<{
       {(typeof totalDocs === 'undefined' || totalDocs === 0) && 'Search produced no results.'}
       {typeof totalDocs !== 'undefined' &&
         totalDocs > 0 &&
-        `Showing ${indexStart}${indexStart > 0 ? ` - ${indexEnd}` : ''} of ${totalDocs} ${
-          totalDocs > 1 ? plural : singular
+        `${t('showing')} ${indexStart}${indexStart > 0 ? ` - ${indexEnd}` : ''} ${t('of')} ${totalDocs} ${
+          totalDocs > 1 ? t('posts').toLowerCase() : t('post').toLowerCase()
         }`}
     </div>
   )

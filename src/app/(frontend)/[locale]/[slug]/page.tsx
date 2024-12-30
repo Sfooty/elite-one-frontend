@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
-import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import { getPayload, TypedLocale } from 'payload'
+import { draftMode, headers as getHeaders } from 'next/headers'
+import React, { cache, Fragment } from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
 
 import type { Page as PageType } from '@/payload-types'
@@ -13,7 +13,9 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
-import { TypedLocale } from 'payload'
+import { Gutter } from '@payloadcms/ui'
+import { HydrateClientUser } from '@/app/(frontend)/[locale]/_components/HydrateClientUser'
+import config from '../../../../payload.config'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -46,8 +48,8 @@ type Args = {
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const { slug = 'home',  locale = "fr" } = await paramsPromise
-  const url = `/${slug}`;
+  const { slug = 'acceuil', locale = 'fr' } = await paramsPromise
+  const url = `/${slug}`
 
   let page: PageType | null
 
@@ -57,38 +59,46 @@ export default async function Page({ params: paramsPromise }: Args) {
   })
 
   // Remove this code once your website is seeded
-  if (!page && slug === 'home') {
+/*  if (!page && slug === 'home') {
     page = homeStatic
-  }
+  }*/
 
   if (!page) {
     return <PayloadRedirects url={url} />
   }
 
   const { hero, layout } = page
+  const headers = await getHeaders()
+  const payload = await getPayload({ config })
+  const { permissions, user } = await payload.auth({ headers })
 
   return (
-    <article className="pt-10 pb-24">
-      <PageClient />
-      {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
-      <RenderHero {...hero} />
-      <RenderBlocks paddingTop={false} blocks={layout} />
-    </article>
+    <Fragment>
+      <HydrateClientUser permissions={permissions} user={user} />
+      <Gutter>
+        <article className="pt-10 pb-24">
+          <PageClient />
+          {/* Allows redirects for valid pages too */}
+          <PayloadRedirects disableNotFound url={url} />
+          <RenderHero {...hero} />
+          <RenderBlocks paddingTop={false} blocks={layout} />
+        </article>
+      </Gutter>
+    </Fragment>
   )
 }
 
 export async function generateMetadata({ params: paramsPromise }): Promise<Metadata> {
-  const { slug = 'home', locale = "fr" } = await paramsPromise
+  const { slug = 'acceuil', locale = 'fr' } = await paramsPromise
   const page = await queryPageBySlug({
     slug,
-    locale
+    locale,
   })
 
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: TypedLocale; }) => {
+const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: TypedLocale }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
