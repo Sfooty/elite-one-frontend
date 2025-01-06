@@ -2,7 +2,7 @@ import React from 'react'
 
 import { HeaderThemeProvider } from './HeaderTheme'
 import { ThemeProvider } from './Theme'
-import { AuthProvider } from '@/app/(frontend)/[locale]/_providers/Auth'
+import { AuthProvider } from 'src/providers/Auth'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { TypedLocale } from 'payload'

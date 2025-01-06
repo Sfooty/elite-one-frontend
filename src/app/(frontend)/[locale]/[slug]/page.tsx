@@ -14,7 +14,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { Gutter } from '@payloadcms/ui'
-import { HydrateClientUser } from '@/app/(frontend)/[locale]/_components/HydrateClientUser'
+import { HydrateClientUser } from 'src/components/HydrateClientUser'
 import config from '../../../../payload.config'
 
 export async function generateStaticParams() {

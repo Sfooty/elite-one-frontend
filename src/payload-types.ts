@@ -443,7 +443,8 @@ export interface Post {
  */
 export interface User {
   id: number;
-  name?: string | null;
+  'first name'?: string | null;
+  'last name'?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1121,7 +1122,8 @@ export interface CategoriesSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  name?: T;
+  'first name'?: T;
+  'last name'?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

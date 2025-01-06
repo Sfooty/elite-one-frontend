@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Slider from 'react-slick';
 import fixtures from './fixtures-data';
@@ -5,6 +7,7 @@ import './carouselStyles.css';
 import { Carousel } from './Components/carousel';
 import {PrevArrow} from "@/components/FixturesCarousel/Components/PrevArrow";
 import {NextArrow} from "@/components/FixturesCarousel/Components/NextArrow";
+import { useTranslations } from 'use-intl'
 
 
 const FixturesCarousel: React.FC = () => {
@@ -18,6 +21,8 @@ const FixturesCarousel: React.FC = () => {
   );
 
   const initialSlide = closestFixtureIndex !== -1 ? closestFixtureIndex : 0;
+
+  const t = useTranslations()
 
   const settings = {
     dots: false,
@@ -53,7 +58,7 @@ const FixturesCarousel: React.FC = () => {
 
   return (
     <div className="bg-white p-5 rounded shadow-xl">
-      <h2 className="text-xl font-bold text-center mb-4">Match Fixtures</h2>
+      <h2 className="text-xl font-bold text-center mb-4">{t("match-fixtures")}</h2>
       <Slider {...settings}>
         {currentWeekFixtures.map((fixture) => (
           <div key={fixture.id}>

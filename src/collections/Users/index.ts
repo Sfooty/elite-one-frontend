@@ -25,12 +25,16 @@ export const Users: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['name', 'email'],
-    useAsTitle: 'name',
+    useAsTitle: 'first name',
   },
   auth: true,
   fields: [
     {
-      name: 'name',
+      name: 'first name',
+      type: 'text',
+    },
+    {
+      name: 'last name',
       type: 'text',
     },
   ],

@@ -34,8 +34,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({header}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerTheme])
 
+  const pagesWithoutHeader = ['login', 'create-account', 'reset-password', 'forgot-password']
+
   return (
-    <div className="bg-secondary-foreground" {...(theme ? {'data-theme': theme} : {})}>
+    <>
+      {!pagesWithoutHeader.some(page => pathname.includes(page)) && (
+      <div className="bg-secondary-foreground" {...(theme ? {'data-theme': theme} : {})}>
       {pathname === `/${locale}` &&
         <div className="container flex justify-center relative z-20 py-5">
           <div className="flex space-x-4 overflow-x-scroll p-2">
@@ -74,5 +78,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({header}) => {
         <FixturesCarousel/>
       }
     </div>
+      )}
+    </>
   )
 }

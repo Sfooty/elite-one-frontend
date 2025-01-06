@@ -7,7 +7,7 @@ import React from 'react'
 import { Post } from '@/payload-types'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
-import { CardPostData } from '@/components/Card'
+import { CardPostData } from 'src/components/CardTwo'
 
 type Args = {
   searchParams: Promise<{
